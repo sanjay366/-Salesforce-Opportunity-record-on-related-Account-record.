@@ -1,0 +1,12 @@
+trigger related on Account (after insert) {
+List<Opportunity> Opplist = new List<Opportunity>();
+    for(Account acc:Trigger.new){
+    Opportunity opp = new Opportunity();
+    opp.Name        = acc.Name + 'Opportunity';
+    opp.StageName   = 'Closed Won';
+    opp.CloseDate   = Date.today() + 90;
+    opp.AccountId   = acc.Id;
+    Opplist.add(opp);
+    }
+    insert Opplist;
+}
